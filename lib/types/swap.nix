@@ -26,6 +26,14 @@
       default = false;
       description = "Whether to use this as a boot.resumeDevice";
     };
+    extraOptions = lib.mkOption {
+      default = [ "defaults" ];
+      description = "Swap options (as defined in swapDevices.*.options)";
+      example = ''[
+          "nofail"
+        ];
+      '';
+    };
     _parent = lib.mkOption {
       internal = true;
       default = parent;
@@ -63,6 +71,7 @@
         swapDevices = [{
           device = config.device;
           randomEncryption = config.randomEncryption;
+          options = config.extraOptions;
         }];
         boot.resumeDevice = lib.mkIf config.resumeDevice config.device;
       }];
